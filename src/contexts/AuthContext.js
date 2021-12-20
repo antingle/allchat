@@ -8,7 +8,7 @@ import {
   serverTimestamp,
   setDoc,
 } from "firebase/firestore";
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useMemo } from "react";
 export const AuthContext = createContext();
 
 const app = initializeApp({
@@ -26,9 +26,9 @@ export const AuthProvider = ({ children }) => {
   const [name, setName] = useState(null);
   const [userCode, setUserCode] = useState(null);
 
-  const auth = getAuth();
-  const db = getFirestore();
-  const analytics = getAnalytics(app);
+  const auth = useMemo(() => getAuth(), []);
+  const db = useMemo(() => getFirestore(), []);
+  const analytics = useMemo(() => getAnalytics(app), []);
 
   useEffect(() => {
     signInAnonymously(auth)

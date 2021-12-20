@@ -17,8 +17,10 @@ export default function ChatRoom() {
   const [formValue, setFormValue] = useState("");
   const [disabled, setDisabled] = useState(false); // prevent spam messages
 
-  const messagesRef = collection(db, "messages");
-  const q = query(messagesRef, orderBy("createdAt", "desc"), limit(30));
+  const [messagesRef] = useState(collection(db, "messages"));
+  const [q] = useState(
+    query(messagesRef, orderBy("createdAt", "desc"), limit(30))
+  );
   const [messages] = useCollectionData(q, { idField: "id" });
 
   useEffect(() => {
@@ -48,7 +50,8 @@ export default function ChatRoom() {
     }
   };
 
-  if (error) return <h1>Sorry, an error has occurred :(</h1>;
+  if (error)
+    return <h1 style={{ color: "white" }}>Sorry, an error has occurred :(</h1>;
 
   return (
     <>

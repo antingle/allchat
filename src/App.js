@@ -1,23 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import scrollPolyfill from "scroll-polyfill";
+import useAuth from "./hooks/useAuth";
+import ChatRoom from "./components/ChatRoom";
+import "./css/App.css";
+import { useCollectionData } from "react-firebase-hooks/firestore";
+import { collection, limit, query } from "firebase/firestore";
 
 function App() {
+  const { auth, db } = useAuth();
+  const [newUser] = useCollectionData(query(collection(db, "users"), limit(1)));
+  const [announcement, setAnnouncement] = useState(false);
+
+  useEffect(() => {
+    scrollPolyfill();
+  }, []);
+
+  useEffect(() => {
+    console.log(newUser);
+    setAnnouncement(true);
+    setTimeout(() => setAnnouncement(false), 5000);
+  }, [newUser]);
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h1>/allchat</h1>
+        {newUser && announcement && (
+          <div className="new-user-announcement">
+            {newUser[0].name} just joined for the first time!
+          </div>
+        )}
       </header>
+      <section>{auth && <ChatRoom />}</section>
     </div>
   );
 }

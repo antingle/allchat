@@ -1,0 +1,26 @@
+:root {
+  --primary-color: hsl(220, 10%, 18%);
+  --primary-transparent-color: hsla(220, 10%, 18%, 0.911);
+  --secondary-color: hsl(199, 100%, 62%);
+  --caption-color: hsl(0, 0%, 89%);
+  --recieved-message-color: hsl(223, 5%, 25%);
+  --sent-message-color: hsl(223, 7%, 32%);
+  --input-color: hsl(220, 9%, 87%);
+  --disabled-color: hsl(199, 0%, 62%);
+}
+
+html,
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--primary-color);
+  overscroll-behavior: none;
+}
+
+* {
+  box-sizing: border-box;
+}

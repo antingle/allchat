@@ -16,7 +16,6 @@ function App() {
   }, []);
 
   useEffect(() => {
-    console.log(newUser);
     setAnnouncement(true);
     setTimeout(() => setAnnouncement(false), 5000);
   }, [newUser]);

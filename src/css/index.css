@@ -1,12 +1,12 @@
 :root {
-  --primary-color: hsl(220, 10%, 18%);
-  --primary-transparent-color: hsla(220, 10%, 18%, 0.911);
-  --secondary-color: hsl(199, 100%, 62%);
-  --caption-color: hsl(0, 0%, 89%);
-  --recieved-message-color: hsl(223, 5%, 25%);
-  --sent-message-color: hsl(223, 7%, 32%);
-  --input-color: hsl(220, 9%, 87%);
-  --disabled-color: hsl(199, 0%, 62%);
+  --primary-color: #292c32;
+  --primary-transparent-color: #292c32e8;
+  --secondary-color: #3dc2ff;
+  --caption-color: #e3e3e3;
+  --recieved-message-color: #3d3e43;
+  --sent-message-color: #4c4f57;
+  --input-color: #dbdde1;
+  --disabled-color: #9e9e9e;
 }
 
 html,

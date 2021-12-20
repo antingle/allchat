@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
   const [name, setName] = useState(null);
   const [userCode, setUserCode] = useState(null);
 
-  const auth = useMemo(() => getAuth(), []);
+  const auth = getAuth();
   const db = useMemo(() => getFirestore(), []);
   const analytics = useMemo(() => getAnalytics(app), []);
   const [user, loading] = useAuthState(auth);

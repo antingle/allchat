@@ -12,7 +12,7 @@ import useAuth from "../hooks/useAuth";
 import ChatMessage from "./ChatMessage";
 
 export default function ChatRoom() {
-  const { db, auth, name, userCode, error } = useAuth();
+  const { db, user, name, userCode, error } = useAuth();
   const bottomOfChat = useRef();
   const [formValue, setFormValue] = useState("");
   const [disabled, setDisabled] = useState(false); // prevent spam messages
@@ -31,7 +31,7 @@ export default function ChatRoom() {
     e?.preventDefault();
     if (formValue === "" || null) return;
     setDisabled(true);
-    const { uid } = auth.currentUser;
+    const { uid } = user;
     await addDoc(collection(db, "messages"), {
       text: formValue,
       createdAt: serverTimestamp(),

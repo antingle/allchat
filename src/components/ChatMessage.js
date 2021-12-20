@@ -1,9 +1,9 @@
 import useAuth from "../hooks/useAuth";
 
 export default function ChatMessage(props) {
-  const { auth } = useAuth();
+  const { user } = useAuth();
   const { text, uid, createdAt, name, userCode } = props.message;
-  const messageClass = uid === auth.currentUser.uid ? "sent" : "recieved";
+  const messageClass = uid === user.uid ? "sent" : "recieved";
   return (
     <div className={`message ${messageClass}`}>
       <p className="message-user">

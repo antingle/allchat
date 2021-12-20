@@ -8,7 +8,7 @@ import {
   serverTimestamp,
   setDoc,
 } from "firebase/firestore";
-import { createContext, useState, useEffect, useMemo } from "react";
+import { createContext, useState, useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 export const AuthContext = createContext();
 
@@ -21,16 +21,15 @@ const app = initializeApp({
   appId: "1:814348582582:web:847364f5310c760a51b017",
   measurementId: "G-YJF9RQK9W0",
 });
+const auth = getAuth();
+const db = getFirestore();
+const analytics = getAnalytics(app);
 
 export const AuthProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [name, setName] = useState(null);
   const [userCode, setUserCode] = useState(null);
-
-  const auth = getAuth();
-  const db = useMemo(() => getFirestore(), []);
-  const analytics = useMemo(() => getAnalytics(app), []);
-  const [user, loading] = useAuthState(auth);
+  const [user] = useAuthState(auth);
 
   useEffect(() => {
     signInAnonymously(auth)
@@ -69,13 +68,13 @@ export const AuthProvider = ({ children }) => {
         console.log(error);
         setError(`${error.code} : ${error.message}`);
       });
-  }, [db, auth]);
+  }, []);
 
   return (
     <AuthContext.Provider
-      value={{ auth, db, analytics, name, userCode, error, user, loading }}
+      value={{ db, analytics, name, userCode, error, user }}
     >
-      {children}
+      {user && children}
     </AuthContext.Provider>
   );
 };

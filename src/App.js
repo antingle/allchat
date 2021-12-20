@@ -5,21 +5,25 @@ import ChatRoom from "./components/ChatRoom";
 import "./css/App.css";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { collection, limit, query } from "firebase/firestore";
+import Loader from "./components/Loader";
 
 function App() {
-  const { db, loading, user } = useAuth();
+  const { db, user } = useAuth();
   const [newUser] = useCollectionData(query(collection(db, "users"), limit(1)));
   const [announcement, setAnnouncement] = useState(false);
 
+  // initialize smooth scrolling on safari
   useEffect(() => {
     scrollPolyfill();
   }, []);
 
+  // checks when a new user has been created
   useEffect(() => {
-    if (loading && !newUser && typeof newUser === "object") return;
+    if (!newUser && typeof newUser === "object") return;
     setAnnouncement(true);
     setTimeout(() => setAnnouncement(false), 5000);
-  }, [newUser, loading]);
+  }, [newUser]);
+
   return (
     <div className="App">
       <header className="App-header">
@@ -30,7 +34,7 @@ function App() {
           </div>
         )}
       </header>
-      <section>{user && <ChatRoom />}</section>
+      <section>{user ? <ChatRoom /> : <Loader />}</section>
     </div>
   );
 }

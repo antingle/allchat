@@ -9,6 +9,7 @@ import {
   setDoc,
 } from "firebase/firestore";
 import { createContext, useState, useEffect, useMemo } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 export const AuthContext = createContext();
 
 const app = initializeApp({
@@ -29,6 +30,7 @@ export const AuthProvider = ({ children }) => {
   const auth = useMemo(() => getAuth(), []);
   const db = useMemo(() => getFirestore(), []);
   const analytics = useMemo(() => getAnalytics(app), []);
+  const [user, loading] = useAuthState(auth);
 
   useEffect(() => {
     signInAnonymously(auth)
@@ -71,7 +73,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ auth, db, analytics, name, userCode, error }}
+      value={{ auth, db, analytics, name, userCode, error, user, loading }}
     >
       {children}
     </AuthContext.Provider>

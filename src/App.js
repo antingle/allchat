@@ -7,7 +7,7 @@ import { useCollectionData } from "react-firebase-hooks/firestore";
 import { collection, limit, query } from "firebase/firestore";
 
 function App() {
-  const { auth, db } = useAuth();
+  const { db, loading, user } = useAuth();
   const [newUser] = useCollectionData(query(collection(db, "users"), limit(1)));
   const [announcement, setAnnouncement] = useState(false);
 
@@ -16,11 +16,10 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (!newUser && typeof newUser === "object" && newUser.length !== 0) return;
+    if (loading && !newUser && typeof newUser === "object") return;
     setAnnouncement(true);
     setTimeout(() => setAnnouncement(false), 5000);
-  }, [newUser]);
-
+  }, [newUser, loading]);
   return (
     <div className="App">
       <header className="App-header">
@@ -31,7 +30,7 @@ function App() {
           </div>
         )}
       </header>
-      <section>{auth && <ChatRoom />}</section>
+      <section>{user && <ChatRoom />}</section>
     </div>
   );
 }

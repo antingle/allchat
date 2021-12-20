@@ -58,8 +58,8 @@ export default function ChatRoom() {
       <main>
         {messages &&
           messages
-            .reverse()
-            .map((msg) => <ChatMessage key={msg.id} message={msg} />)}
+            .map((msg) => <ChatMessage key={msg.id} message={msg} />)
+            .reverse()}
         <div ref={bottomOfChat}></div>
       </main>
 

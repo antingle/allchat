@@ -16,15 +16,28 @@ export default function ChatRoom() {
   const bottomOfChat = useRef();
   const [formValue, setFormValue] = useState("");
   const [disabled, setDisabled] = useState(false); // prevent spam messages
+  const [allMessages, setAllMessages] = useState([]);
 
   const [messagesRef] = useState(collection(db, "messages"));
   const [q] = useState(
-    query(messagesRef, orderBy("createdAt", "desc"), limit(30))
+    query(messagesRef, orderBy("createdAt", "desc"), limit(1))
   );
   const [messages] = useCollectionData(q, { idField: "id" });
 
   useEffect(() => {
+    if (messages) {
+      const item = messages[0];
+      const foundIndex = allMessages.findIndex((x) => x.id === item.id);
+      if (foundIndex === -1) {
+        setAllMessages((prev) => [...prev, messages[0]]);
+      } else
+        setAllMessages((prev) => {
+          prev[foundIndex] = item;
+          return prev;
+        });
+    }
     bottomOfChat.current.scrollIntoView({ behavior: "smooth" });
+    // eslint-disable-next-line
   }, [messages]);
 
   const sendMessage = async (e) => {
@@ -46,7 +59,7 @@ export default function ChatRoom() {
   const submitOnEnter = (event) => {
     if (event.which === 13 && !event.shiftKey) {
       event.preventDefault();
-      sendMessage();
+      if (!disabled) sendMessage();
     }
   };
 
@@ -56,10 +69,8 @@ export default function ChatRoom() {
   return (
     <>
       <main>
-        {messages &&
-          messages
-            .map((msg) => <ChatMessage key={msg.id} message={msg} />)
-            .reverse()}
+        {allMessages &&
+          allMessages.map((msg) => <ChatMessage key={msg.id} message={msg} />)}
         <div ref={bottomOfChat}></div>
       </main>
 

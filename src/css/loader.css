@@ -1,3 +1,10 @@
+.flex-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
 .loader {
   border: 0.1rem solid #3d3e43;
   border-top: 0.1em solid white;

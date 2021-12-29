@@ -6,9 +6,10 @@ import "./css/App.css";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { collection, limit, query } from "firebase/firestore";
 import Loader from "./components/Loader";
+import WelcomeScreen from "./components/WelcomeScreen";
 
 function App() {
-  const { db, user } = useAuth();
+  const { db, user, showWelcome, loading } = useAuth();
   const [newUser] = useCollectionData(query(collection(db, "users"), limit(1)));
   const [announcement, setAnnouncement] = useState(false);
 
@@ -23,6 +24,12 @@ function App() {
     setAnnouncement(true);
     setTimeout(() => setAnnouncement(false), 5000);
   }, [newUser]);
+
+  if (loading) return <Loader />;
+
+  if (showWelcome) {
+    return <WelcomeScreen />;
+  }
 
   return (
     <div className="App">

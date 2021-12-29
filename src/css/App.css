@@ -40,7 +40,7 @@ h1 {
 .App section {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
   min-height: 100vh;
   max-width: inherit;
 }
@@ -50,12 +50,7 @@ main {
   overflow-y: scroll;
   display: flex;
   flex-direction: column;
-}
-
-main {
   width: inherit;
-  display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: flex-end;
   gap: 0.5rem;
@@ -137,6 +132,8 @@ form button {
   height: 100%;
   cursor: pointer;
   font-size: inherit;
+  font-family: inherit;
+  font-weight: 500;
 }
 
 button:disabled {

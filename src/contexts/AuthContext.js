@@ -27,9 +27,11 @@ const analytics = getAnalytics(app);
 
 export const AuthProvider = ({ children }) => {
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [name, setName] = useState(null);
   const [userCode, setUserCode] = useState(null);
   const [user] = useAuthState(auth);
+  const [showWelcome, setShowWelcome] = useState(false);
 
   useEffect(() => {
     signInAnonymously(auth)
@@ -42,6 +44,7 @@ export const AuthProvider = ({ children }) => {
           setName(docSnap.data().name);
           setUserCode(docSnap.data().userCode);
         } else {
+          setShowWelcome(true);
           const responseAdj = await fetch(
             "https://random-word-form.herokuapp.com/random/adjective",
             { method: "get" }
@@ -63,16 +66,28 @@ export const AuthProvider = ({ children }) => {
             userCode: newCode,
           });
         }
+        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
         setError(`${error.code} : ${error.message}`);
+        setLoading(false);
       });
   }, []);
 
   return (
     <AuthContext.Provider
-      value={{ db, analytics, name, userCode, error, user }}
+      value={{
+        db,
+        analytics,
+        name,
+        userCode,
+        error,
+        user,
+        showWelcome,
+        setShowWelcome,
+        loading,
+      }}
     >
       {user && children}
     </AuthContext.Provider>

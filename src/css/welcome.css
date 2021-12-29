@@ -1,0 +1,51 @@
+.flex {
+  display: flex;
+}
+
+.flex-item {
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.container {
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  min-height: 80vh;
+  color: white;
+  max-width: 30rem;
+  margin: auto;
+  padding: 1rem;
+}
+
+.welcome {
+  margin-bottom: 3rem;
+}
+
+.text {
+  font-size: 14pt;
+  margin-left: 1rem;
+}
+
+.colored {
+  color: var(--secondary-color);
+}
+
+.welcome-button {
+  margin-top: 1rem;
+  background-color: var(--secondary-color);
+  color: #1e1e24;
+  border: none;
+  border-radius: 12pt;
+  width: 100%;
+  padding: 1rem 0;
+  cursor: pointer;
+  font-size: 14pt;
+}
+
+.svg {
+  height: 4rem;
+  width: 4rem;
+}
